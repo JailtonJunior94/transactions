@@ -1,3 +1,17 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
    "name":"sql-server-connection",
    "config":{
@@ -8,7 +22,8 @@
       "database.password":"@docker@2021",
       "database.dbname":"Transaction",
       "database.server.name":"transacion_server",
-      "table .whitelist":"dbo.Transaction",
+      "table.whitelist":"dbo.Transaction",
+      "snapshot.mode":"initial_schema_only",
       "database.history":"io.debezium.relational.history.MemoryDatabaseHistory"
    }
 }
