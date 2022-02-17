@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+  mssql:
+    container_name: mssql
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: always
+    ports:
+      - "1433:1433"
+    networks:
+      - transactions_net
+    volumes:
+      - ./.docker/data:/var/opt/mssql/data
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: '@docker@2021'
+      MSSQL_AGENT_ENABLED: 'True'
+
+  debezium_connect:
+    container_name: debezium_connect
+    image: debezium/connect:1.8
+    restart: always
+    depends_on:
+      - mssql
+    ports:
+      - 8083:8083
+    networks:
+      - transactions_net
+    environment:
+      - BOOTSTRAP_SERVERS="{NAMESPACE_EH}"
+      - GROUP_ID=transaction_consumer_group
+      - CONFIG_STORAGE_TOPIC=debezium_configs
+      - OFFSET_STORAGE_TOPIC=debezium_offsets
+      - STATUS_STORAGE_TOPIC=debezium_statuses
+      - CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE=false
+      - CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE=false
+      - CONNECT_OFFSET_STORAGE_PARTITIONS=1
+      - CONNECT_STATUS_STORAGE_PARTITIONS=1
+      - CONNECT_REQUEST_TIMEOUT_MS=60000
+      - CONNECT_SECURITY_PROTOCOL=SASL_SSL
+      - CONNECT_SASL_MECHANISM=PLAIN
+      - CONNECT_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="$$ConnectionString" password="{CONNECTION_STRING_EH}";
+      - CONNECT_PRODUCER_SECURITY_PROTOCOL=SASL_SSL
+      - CONNECT_PRODUCER_SASL_MECHANISM=PLAIN
+      - CONNECT_PRODUCER_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="$$ConnectionString" password="{CONNECTION_STRING_EH}";
+      - CONNECT_CONSUMER_SECURITY_PROTOCOL=SASL_SSL
+      - CONNECT_CONSUMER_SASL_MECHANISM=PLAIN
+      - CONNECT_CONSUMER_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="$$ConnectionString" password="{CONNECTION_STRING_EH}";
+
+networks:
+  transactions_net:
+    driver: bridge
