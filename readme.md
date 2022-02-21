@@ -1,17 +1,4 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
 {
    "name":"sql-server-connection",
    "config":{
@@ -27,3 +14,4 @@
       "database.history":"io.debezium.relational.history.MemoryDatabaseHistory"
    }
 }
+```
