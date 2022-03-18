@@ -1,7 +1,6 @@
 using Confluent.Kafka;
 using Newtonsoft.Json;
 using Transactions.Core.Domain.Dtos;
-using Transactions.Core.Shared.Extensions;
 using Transactions.Core.Domain.Interfaces.Handlers;
 
 namespace Transactions.Worker
@@ -40,7 +39,7 @@ namespace Transactions.Worker
             {
                 try
                 {
-                    _logger.LogInformation("Worker running at: {time}", DateTime.Now.GetBrazilianTime());
+                    _logger.LogInformation("[Aguardando novos eventos...]");
 
                     ConsumeResult<string, string> response = _consumer.Consume(stoppingToken);
                     _logger.LogInformation($"[Message] [{response.Message.Value}]");
@@ -51,22 +50,20 @@ namespace Transactions.Worker
                         await _handle.HandleAsync(message.After.Id, message.After.CustomerId);
                         continue;
                     }
-
-                    _logger.LogInformation("Worker finished at: {time}", DateTime.Now.GetBrazilianTime());
                 }
                 catch (ConsumeException exception)
                 {
-                    _logger.LogError($"[ERROR] [{exception.Error.Reason}]");
+                    _logger.LogError($"[{exception.Error.Reason}]");
                     continue;
                 }
                 catch (OperationCanceledException exception)
                 {
-                    _logger.LogError($"[ERROR] [{exception?.InnerException?.Message ?? exception?.Message}]");
+                    _logger.LogError($"[{exception?.InnerException?.Message ?? exception?.Message}]");
                     continue;
                 }
                 catch (Exception exception)
                 {
-                    _logger.LogError($"[ERROR] [{exception?.InnerException?.Message ?? exception?.Message}]");
+                    _logger.LogError($"[{exception?.InnerException?.Message ?? exception?.Message}]");
                     continue;
                 }
             }

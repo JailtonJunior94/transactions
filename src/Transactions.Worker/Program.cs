@@ -1,3 +1,4 @@
+using Serilog;
 using Transactions.Worker;
 using Transactions.Worker.Configurations;
 
@@ -13,8 +14,10 @@ IHost host = Host.CreateDefaultBuilder(args)
         IConfiguration configuration = builder.Build();
 
         services.AddDependencies(configuration);
+        services.AddLogger(configuration);
         services.AddHostedService<Worker>();
     })
+    .UseSerilog()
     .Build();
 
 await host.RunAsync();

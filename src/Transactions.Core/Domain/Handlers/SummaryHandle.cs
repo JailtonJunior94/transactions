@@ -26,13 +26,13 @@ namespace Transactions.Core.Domain.Handlers
             SummaryQueryDto query = await _summarySQLRepository.GetSummaryByIdAndCustomerIdAsync(transactionId, customerId);
             if (query is null)
             {
-                _logger.LogWarning("[WARNING] [Não foi encontrado nenhum extrato na base de dados SQL Server]");
+                _logger.LogWarning("[Não foi encontrado nenhum extrato na base de dados SQL Server]");
                 return;
             }
 
             Summary newSummary = new(query.CustomerName, query.CustomerDocument, query.TransactionDescription, query.TransactionValue, query.TransactionDate);
             await _summaryRepository.InsertAsync(newSummary);
-            _logger.LogInformation("[SUCCESS] [Adicionado informações do extrato na base de dados MongoDB]");
+            _logger.LogInformation("[Adicionado informações do extrato na base de dados MongoDB]");
         }
     }
 }

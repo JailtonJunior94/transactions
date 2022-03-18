@@ -1,21 +1,21 @@
 version: "3"
 
 services:
-  worker:
-    container_name: worker
-    image: transaction-worker
-    build: 
-      context: .
-      dockerfile: src/Transactions.Worker/Dockerfile
-    restart: always
-    depends_on:
-      - mssql
-      - mongodb
-      - debezium_connect
-    networks:
-      - transactions_net
-    environment:
-      DOTNET_ENVIRONMENT: 'Production'
+  # worker:
+  #   container_name: worker
+  #   image: transaction-worker
+  #   build: 
+  #     context: .
+  #     dockerfile: src/Transactions.Worker/Dockerfile
+  #   restart: always
+  #   depends_on:
+  #     - mssql
+  #     - mongodb
+  #     - debezium_connect
+  #   networks:
+  #     - transactions_net
+  #   environment:
+  #     DOTNET_ENVIRONMENT: 'Production'
 
   mssql:
     container_name: mssql
@@ -54,7 +54,7 @@ services:
     networks:
       - transactions_net
     environment:
-      - BOOTSTRAP_SERVERS={EH_NAME}
+      - BOOTSTRAP_SERVERS=transactions-events.servicebus.windows.net:9093
       - GROUP_ID=transaction_consumer_group
       - CONFIG_STORAGE_TOPIC=debezium_configs
       - OFFSET_STORAGE_TOPIC=debezium_offsets

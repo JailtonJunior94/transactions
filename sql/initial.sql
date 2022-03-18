@@ -33,12 +33,12 @@ INSERT INTO [Customers] ([Document], [Name]) VALUES ('74593599806', 'Jailton');
 INSERT INTO [Customers] ([Document], [Name]) VALUES ('76076763841', 'Stefany');
 INSERT INTO [Customers] ([Document], [Name]) VALUES ('08377371847', 'Antony');
 
-INSERT INTO [Transaction] ([CustomerId], [TransactionValue], [TransactionDate], [TransactionDescription]) VALUES (1, 2.50, GETDATE(), 'Rodoanel Oeste Castello');
+INSERT INTO [Transaction] ([CustomerId], [TransactionValue], [TransactionDate], [TransactionDescription]) VALUES (1, 2.50, GETDATE(), 'Rodoanel Oeste Castelo');
 INSERT INTO [Transaction] ([CustomerId], [TransactionValue], [TransactionDate], [TransactionDescription]) VALUES (1, 19.50, GETDATE(), 'Estacionamento');
 INSERT INTO [Transaction] ([CustomerId], [TransactionValue], [TransactionDate], [TransactionDescription]) VALUES (1, 0, GETDATE(), 'Mensalidade');
 
 INSERT INTO [Transaction] ([CustomerId], [TransactionValue], [TransactionDate], [TransactionDescription]) VALUES (2, 2.50, GETDATE(), 'Rodoanel Oeste Castelo');
-INSERT INTO [Transaction] ([CustomerId], [TransactionValue], [TransactionDate], [TransactionDescription]) VALUES (2, 2.50, GETDATE(), 'Rodoanel Oeste Castello');
+INSERT INTO [Transaction] ([CustomerId], [TransactionValue], [TransactionDate], [TransactionDescription]) VALUES (2, 2.50, GETDATE(), 'Rodoanel Oeste Castelo');
 
 INSERT INTO [Transaction] ([CustomerId], [TransactionValue], [TransactionDate], [TransactionDescription]) VALUES (3, 19.50, GETDATE(), 'Estacionamento');
 INSERT INTO [Transaction] ([CustomerId], [TransactionValue], [TransactionDate], [TransactionDescription]) VALUES (3, 0, GETDATE(), 'Mensalidade');
