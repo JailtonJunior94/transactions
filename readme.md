@@ -1,3 +1,10 @@
+# Transações POC
+
+## Desenho da solução
+
+## Como configurar o CDC
+
+## Como configurar o Debezium Connect
 ```
 {
    "name":"sql-server-connection",
@@ -15,3 +22,28 @@
    }
 }
 ```
+
+## Como utilizar em ambiente local
+
+## Como utilizar no K8S
+- Verificando o contexto (cluster configurado)
+  ```
+  kubectl config get-contexts
+  ```
+- Alterando o contexto (cluster). Se necessário.
+  ```
+  kubectl config use-context (nome do contexto)
+  ```
+- Criando namespace 
+  ```
+  kubectl apply -f .\.k8s\namespaces\ -R
+  ```
+- Criando deployments 
+  ```
+  kubectl apply -f .\.k8s\deployments\ -R -n transactions
+  ```
+- Criando services 
+  ```
+  kubectl apply -f .\.k8s\services\ -R -n transactions
+  ```
+  

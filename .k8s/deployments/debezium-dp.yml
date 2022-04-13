@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: debezium-config
+data:
+  BOOTSTRAP_SERVERS: transactions-events.servicebus.windows.net:9093
+  GROUP_ID: transaction_consumer_group
+  CONFIG_STORAGE_TOPIC: debezium_configs
+  OFFSET_STORAGE_TOPIC: debezium_offsets
+  STATUS_STORAGE_TOPIC: debezium_statuses
+  CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE: "false"
+  CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+  CONNECT_OFFSET_STORAGE_PARTITIONS: "1"
+  CONNECT_STATUS_STORAGE_PARTITIONS: "1"
+  CONNECT_REQUEST_TIMEOUT_MS: "60000"
+  CONNECT_SECURITY_PROTOCOL: SASL_SSL
+  CONNECT_SASL_MECHANISM: PLAIN
+  CONNECT_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="{EH_CONNECTION_STRING}";
+  CONNECT_PRODUCER_SECURITY_PROTOCOL: SASL_SSL
+  CONNECT_PRODUCER_SASL_MECHANISM: PLAIN
+  CONNECT_PRODUCER_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="{EH_CONNECTION_STRING}";
+  CONNECT_CONSUMER_SECURITY_PROTOCOL: SASL_SSL
+  CONNECT_CONSUMER_SASL_MECHANISM: PLAIN
+  CONNECT_CONSUMER_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="{EH_CONNECTION_STRING}";
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: debezium
+  name: debezium-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: debezium
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: debezium
+    spec:
+      containers:
+        - name: debezium
+          image: debezium/connect:1.8
+          ports:
+            - containerPort: 8083
+          envFrom:
+            - configMapRef:
+                name: debezium-config

@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-config
+data:
+  MONGO_INITDB_ROOT_USERNAME: "mongouser"
+  MONGO_INITDB_ROOT_PASSWORD: "mongopwd"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mongodb
+  name: mongodb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:5.0.6
+          ports:
+            - containerPort: 27017
+          envFrom:
+            - configMapRef:
+                name: mssql-config
