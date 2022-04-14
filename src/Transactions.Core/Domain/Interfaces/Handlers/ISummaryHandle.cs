@@ -1,6 +1,4 @@
-﻿using Transactions.Core.Domain.Entities;
-
-namespace Transactions.Core.Domain.Interfaces.Handlers
+﻿namespace Transactions.Core.Domain.Interfaces.Handlers
 {
     public interface ISummaryHandle
     {

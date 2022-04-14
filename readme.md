@@ -31,6 +31,7 @@
 - Build da imagem 
   ```
   docker image build -t jailtonjunior/transactions_worker:v1 -f src/Transactions.Worker/Dockerfile .
+  docker image build -t jailtonjunior/transactions_api:v1 -f src/Transactions.API/Dockerfile .
   ```
 - Logando no docker
   ```
@@ -39,6 +40,7 @@
 - Push da imagem criada
   ```
   docker push jailtonjunior/transactions_worker:v1
+  docker push jailtonjunior/transactions_api:v1
   ```
 
 ## Como utilizar em ambiente local

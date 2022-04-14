@@ -14,6 +14,12 @@ namespace Transactions.Core.Infra.Repositories
             _collection = context.GetCollection<Summary>("summaries");
         }
 
+        public async Task<ICollection<Summary>> GetAsync()
+        {
+            var cursor = await _collection.FindAsync(_ => true);
+            return await cursor.ToListAsync();
+        }
+
         public async Task<Summary> InsertAsync(Summary entity)
         {
             await _collection.InsertOneAsync(entity);

@@ -4,7 +4,7 @@ using Transactions.Core.Domain.Entities;
 using Transactions.Core.Domain.Interfaces.Handlers;
 using Transactions.Core.Domain.Interfaces.Repositories;
 
-namespace Transactions.Core.Domain.Handlers
+namespace Transactions.Core.Application.Handlers
 {
     public class SummaryHandle : ISummaryHandle
     {

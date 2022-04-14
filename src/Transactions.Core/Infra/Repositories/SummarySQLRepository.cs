@@ -31,7 +31,7 @@ namespace Transactions.Core.Infra.Repositories
                                   T.Id = @transactionId
                                   AND T.CustomerId = @customerId";
 
-            using IDbConnection connection = new SqlConnection(_configuration["ConnectionsString:SqlServer"]); ;
+            using IDbConnection connection = new SqlConnection(_configuration["ConnectionsString:SqlServer"]);
             SummaryQueryDto summary = await connection.QueryFirstOrDefaultAsync<SummaryQueryDto>(sql: sql, param: new { transactionId, customerId });
 
             return summary;

@@ -1,21 +1,40 @@
 version: "3"
 
 services:
-  # worker:
-  #   container_name: worker
-  #   image: transaction-worker
-  #   build: 
-  #     context: .
-  #     dockerfile: src/Transactions.Worker/Dockerfile
-  #   restart: always
-  #   depends_on:
-  #     - mssql
-  #     - mongodb
-  #     - debezium_connect
-  #   networks:
-  #     - transactions_net
-  #   environment:
-  #     DOTNET_ENVIRONMENT: 'Production'
+  api:
+    container_name: api
+    image: transaction-api
+    build:
+      context: .
+      dockerfile: src/Transactions.API/Dockerfile
+    restart: always
+    ports:
+      - "443:7204"
+    depends_on:
+      - mssql
+      - mongodb
+      - debezium_connect
+      - worker
+    networks:
+      - transactions_net
+    environment:
+      ASPNETCORE_ENVIRONMENT: 'Development'
+
+  worker:
+    container_name: worker
+    image: transaction-worker
+    build:
+      context: .
+      dockerfile: src/Transactions.Worker/Dockerfile
+    restart: always
+    depends_on:
+      - mssql
+      - mongodb
+      - debezium_connect
+    networks:
+      - transactions_net
+    environment:
+      DOTNET_ENVIRONMENT: 'Development'
 
   mssql:
     container_name: mssql
@@ -66,13 +85,13 @@ services:
       - CONNECT_REQUEST_TIMEOUT_MS=60000
       - CONNECT_SECURITY_PROTOCOL=SASL_SSL
       - CONNECT_SASL_MECHANISM=PLAIN
-      - CONNECT_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="$$ConnectionString" password="{EH_CONNECTION_STRING}";
+      - CONNECT_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="$$ConnectionString" password="{EH_CONNECTION}";
       - CONNECT_PRODUCER_SECURITY_PROTOCOL=SASL_SSL
       - CONNECT_PRODUCER_SASL_MECHANISM=PLAIN
-      - CONNECT_PRODUCER_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="$$ConnectionString" password="{EH_CONNECTION_STRING}";
+      - CONNECT_PRODUCER_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="$$ConnectionString" password="{EH_CONNECTION}";
       - CONNECT_CONSUMER_SECURITY_PROTOCOL=SASL_SSL
       - CONNECT_CONSUMER_SASL_MECHANISM=PLAIN
-      - CONNECT_CONSUMER_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="$$ConnectionString" password="{EH_CONNECTION_STRING}";
+      - CONNECT_CONSUMER_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="$$ConnectionString" password="{EH_CONNECTION}";
 
 networks:
   transactions_net:
