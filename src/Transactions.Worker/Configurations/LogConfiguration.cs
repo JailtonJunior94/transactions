@@ -1,7 +1,5 @@
 ﻿using Serilog;
 using Serilog.Events;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Transactions.Worker.Configurations
 {
