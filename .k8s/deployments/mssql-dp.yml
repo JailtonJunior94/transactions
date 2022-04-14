@@ -14,6 +14,10 @@ spec:
       labels:
         app: sqlserver
     spec:
+      terminationGracePeriodSeconds: 30
+      hostname: sqlserver
+      securityContext:
+        fsGroup: 10001
       containers:
         - name: sqlserver
           image: mcr.microsoft.com/mssql/server:2019-latest

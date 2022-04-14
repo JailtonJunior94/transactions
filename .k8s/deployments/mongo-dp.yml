@@ -34,4 +34,4 @@ spec:
             - containerPort: 27017
           envFrom:
             - configMapRef:
-                name: mssql-config
+                name: mongo-config

@@ -6,5 +6,7 @@ spec:
   selector:
     app: sqlserver
   ports:
-    - port: 1433
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433
   type: LoadBalancer

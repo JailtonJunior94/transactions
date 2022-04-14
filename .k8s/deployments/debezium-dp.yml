@@ -15,13 +15,13 @@ data:
   CONNECT_REQUEST_TIMEOUT_MS: "60000"
   CONNECT_SECURITY_PROTOCOL: SASL_SSL
   CONNECT_SASL_MECHANISM: PLAIN
-  CONNECT_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="{EH_CONNECTION_STRING}";
+  CONNECT_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="{EH_CONNECTION}";
   CONNECT_PRODUCER_SECURITY_PROTOCOL: SASL_SSL
   CONNECT_PRODUCER_SASL_MECHANISM: PLAIN
-  CONNECT_PRODUCER_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="{EH_CONNECTION_STRING}";
+  CONNECT_PRODUCER_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="{EH_CONNECTION}";
   CONNECT_CONSUMER_SECURITY_PROTOCOL: SASL_SSL
   CONNECT_CONSUMER_SASL_MECHANISM: PLAIN
-  CONNECT_CONSUMER_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="{EH_CONNECTION_STRING}";
+  CONNECT_CONSUMER_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="{EH_CONNECTION}";
 ---
 apiVersion: apps/v1
 kind: Deployment

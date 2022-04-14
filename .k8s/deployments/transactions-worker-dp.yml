@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: transactions-worker
+  name: transactions-worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transactions-worker
+  template:
+    metadata:
+      labels:
+        app: transactions-worker
+    spec:
+      containers:
+        - name: transactions-worker
+          image: jailtonjunior/transactions_worker:v1
+          # resources:
+          #   limits:
+          #     cpu: "200m"
+          #     memory: "128Mi"
+          #   requests:
+          #     cpu: "100m"
+          #     memory: "128Mi"
+          env:
+            - name: DOTNET_ENVIRONMENT
+              value: Production

@@ -9,7 +9,7 @@ resource "azurerm_kubernetes_cluster" "transactions_aks" {
   default_node_pool {
     name       = "default"
     node_count = 1
-    vm_size    = "Standard_B2s"
+    vm_size    = "Standard_B2ms"
   }
 
   identity {
