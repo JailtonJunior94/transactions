@@ -32,8 +32,6 @@ app.UseCors(x => x
     .SetIsOriginAllowed(origin => true)
     .AllowCredentials());
 
-app.UseHttpsRedirection();
-app.UseAuthorization();
 app.MapControllers();
 
 app.UseMiddleware<ErrorHandlerMiddleware>();

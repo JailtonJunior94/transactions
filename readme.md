@@ -66,6 +66,16 @@
   ```
   kubectl apply -f .\.k8s\services\ -R -n transactions
   ```
+- Habilitando ingress-nginx no AKS (Azure)
+  ```
+  https://kubernetes.github.io/ingress-nginx/deploy/#azure
+  
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.3/deploy/static/provider/cloud/deploy.yaml
+  ```
+- Criando ingress AKS 
+  ```
+  kubectl apply -f .\.k8s\ingress\ -R -n transactions
+  ```
   
 ## Utilizando AKS 
 - Autenticação no novo cluster

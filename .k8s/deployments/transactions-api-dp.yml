@@ -2,13 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: transactions-worker
-  name: transactions-worker-deployment
+    app: transactions-api
+  name: transactions-api-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: transactions-worker
+      app: transactions-api
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -17,11 +17,11 @@ spec:
   template:
     metadata:
       labels:
-        app: transactions-worker
+        app: transactions-api
     spec:
       containers:
-        - name: transactions-worker
-          image: jailtonjunior/transactions_worker:v3
+        - name: transactions-api
+          image: jailtonjunior/transactions_api:v3
           resources:
             limits:
               cpu: "200m"
@@ -29,6 +29,8 @@ spec:
             requests:
               cpu: "100m"
               memory: "128Mi"
+          ports:
+            - containerPort: 80
           env:
-            - name: DOTNET_ENVIRONMENT
+            - name: ASPNETCORE_ENVIRONMENT
               value: Production

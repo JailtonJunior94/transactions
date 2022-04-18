@@ -1,5 +1,6 @@
 ﻿using Serilog;
 using Serilog.Events;
+using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Transactions.Worker.Configurations
 {
@@ -10,7 +11,7 @@ namespace Transactions.Worker.Configurations
             Log.Logger = new LoggerConfiguration()
                     .ReadFrom.Configuration(configuration)
                     .MinimumLevel.Debug()
-                    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                     .MinimumLevel.Override("System", LogEventLevel.Error)
                     .Enrich.FromLogContext()
                     .Enrich.WithEnvironmentUserName()
@@ -20,6 +21,7 @@ namespace Transactions.Worker.Configurations
                     .Enrich.WithThreadId()
                     .Enrich.WithThreadName()
                     .WriteTo.Console()
+                    .WriteTo.ApplicationInsights(new TelemetryConfiguration { InstrumentationKey = configuration["ApplicationInsights:InstrumentationKey"] }, TelemetryConverter.Traces)
                 .CreateLogger();
 
             services.AddSingleton(Log.Logger);

@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-hosts
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  #   cert-manager.io/cluster-issuer: letsencrypt-production
+spec:
+  # tls:
+  #   - hosts:
+  #       - partners.limateixeira.site
+  #       - address.limateixeira.site
+  #     secretName: partner-api-tls
+  rules:
+    - host: debezium.limateixeira.site
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: debezium-service
+                port:
+                  number: 80
+    - host: api-transacoes.limateixeira.site
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: transactions-api-service
+                port:
+                  number: 80

@@ -1,5 +1,6 @@
 ﻿using Serilog;
 using Serilog.Events;
+using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Transactions.API.Configurations
 {
@@ -20,6 +21,7 @@ namespace Transactions.API.Configurations
                     .Enrich.WithThreadId()
                     .Enrich.WithThreadName()
                     .WriteTo.Console()
+                    .WriteTo.ApplicationInsights(new TelemetryConfiguration { InstrumentationKey = configuration["ApplicationInsights:InstrumentationKey"] }, TelemetryConverter.Traces)
                 .CreateLogger();
 
             services.AddSingleton(Log.Logger);
