@@ -1,0 +1,31 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Transactions API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/Transactions.API/bin/Debug/net6.0/Transactions.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Transactions.API",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
+            "name": "Transactions Worker",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/Transactions.Worker/bin/Debug/net6.0/Transactions.Worker.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Transactions.Worker",
+            "stopAtEntry": false,
+            "env": {
+                "DOTNET_ENVIRONMENT": "Development"
+            }
+        }
+    ]
+}
